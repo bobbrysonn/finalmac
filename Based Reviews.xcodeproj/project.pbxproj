@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3DF6499F2CAF9E1900257731 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3DF6499E2CAF9E1900257731 /* Moya */; };
+		3DF649A22CAFA3FE00257731 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 3DF649A12CAFA3FE00257731 /* Factory */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3DFFE6E52CAF87F60098A996 /* Based Reviews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Based Reviews.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DF6499F2CAF9E1900257731 /* Moya in Frameworks */,
+				3DF649A22CAFA3FE00257731 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = "Based Reviews";
 			packageProductDependencies = (
+				3DF6499E2CAF9E1900257731 /* Moya */,
+				3DF649A12CAFA3FE00257731 /* Factory */,
 			);
 			productName = "Based Reviews";
 			productReference = 3DFFE6E52CAF87F60098A996 /* Based Reviews.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 3DFFE6DC2CAF87F60098A996;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3DF6499D2CAF9E1900257731 /* XCRemoteSwiftPackageReference "Moya" */,
+				3DF649A02CAFA3FE00257731 /* XCRemoteSwiftPackageReference "Factory" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3DFFE6E62CAF87F60098A996 /* Products */;
 			projectDirPath = "";
@@ -319,6 +332,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3DF6499D2CAF9E1900257731 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
+		3DF649A02CAFA3FE00257731 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3DF6499E2CAF9E1900257731 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DF6499D2CAF9E1900257731 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		3DF649A12CAFA3FE00257731 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DF649A02CAFA3FE00257731 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3DFFE6DD2CAF87F60098A996 /* Project object */;
 }
