@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DE596632CB10BA8001420AB /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 3DE596622CB10BA8001420AB /* Cache */; };
 		3DF6499F2CAF9E1900257731 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3DF6499E2CAF9E1900257731 /* Moya */; };
 		3DF649A22CAFA3FE00257731 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 3DF649A12CAFA3FE00257731 /* Factory */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DE596632CB10BA8001420AB /* Cache in Frameworks */,
 				3DF6499F2CAF9E1900257731 /* Moya in Frameworks */,
 				3DF649A22CAFA3FE00257731 /* Factory in Frameworks */,
 			);
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				3DF6499E2CAF9E1900257731 /* Moya */,
 				3DF649A12CAFA3FE00257731 /* Factory */,
+				3DE596622CB10BA8001420AB /* Cache */,
 			);
 			productName = "Based Reviews";
 			productReference = 3DFFE6E52CAF87F60098A996 /* Based Reviews.app */;
@@ -106,6 +109,7 @@
 			packageReferences = (
 				3DF6499D2CAF9E1900257731 /* XCRemoteSwiftPackageReference "Moya" */,
 				3DF649A02CAFA3FE00257731 /* XCRemoteSwiftPackageReference "Factory" */,
+				3DE596612CB10BA8001420AB /* XCRemoteSwiftPackageReference "Cache" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3DFFE6E62CAF87F60098A996 /* Products */;
@@ -334,6 +338,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3DE596612CB10BA8001420AB /* XCRemoteSwiftPackageReference "Cache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hyperoslo/Cache.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.4.0;
+			};
+		};
 		3DF6499D2CAF9E1900257731 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -353,6 +365,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3DE596622CB10BA8001420AB /* Cache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DE596612CB10BA8001420AB /* XCRemoteSwiftPackageReference "Cache" */;
+			productName = Cache;
+		};
 		3DF6499E2CAF9E1900257731 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3DF6499D2CAF9E1900257731 /* XCRemoteSwiftPackageReference "Moya" */;

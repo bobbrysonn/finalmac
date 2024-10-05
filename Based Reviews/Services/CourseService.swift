@@ -9,23 +9,36 @@ import Foundation
 import Factory
 import Moya
 import Alamofire
+import Cache
 
 class CourseService {
-    // Get provider
-    private var provider: MoyaProvider<CourseServiceApi> {
-        // Caching
-        let cache = URLCache(memoryCapacity: 4*1024*1024, diskCapacity: 20*1024*1024, diskPath: "moya_cache")
+    // Provider and cache
+    private let provider: MoyaProvider<CourseServiceApi>
+    private let cache: Storage<CacheKey, CacheValue>
+    
+    init() {
+        let diskConfig = DiskConfig(
+            name: "MoyaCache",
+            expiry: .seconds(432000),
+            maxSize: 10_000_000 // 10 MB
+        )
+        let memoryConfig = MemoryConfig(
+            expiry: .seconds(300),
+            countLimit: 100,
+            totalCostLimit: 10_000_000
+        )
+        do {
+            self.cache = try Storage<CacheKey, CacheValue>(
+                diskConfig: diskConfig,
+                memoryConfig: memoryConfig,
+                fileManager: .default,
+                transformer: TransformerFactory.forData()
+            )
+        } catch {
+            fatalError("Failed to initialize cache: \(error)")
+        }
         
-        // Configure URLSessionConfiguration
-        let configuration = URLSessionConfiguration.default
-        configuration.urlCache = cache
-        configuration.requestCachePolicy = .useProtocolCachePolicy
-
-        // Initialize Alamofire's Session with the configuration
-        let session = Session(configuration: configuration)
-        
-        // Return provider
-        return MoyaProvider<CourseServiceApi>(session: session)
+        self.provider = MoyaProvider<CourseServiceApi>(plugins: [CachePlugin(cache: cache)])
     }
     
     // Fetch courses by title
@@ -43,6 +56,21 @@ extension Container {
 
 extension CourseService {
     private func request<T: Decodable>(target: CourseServiceApi, completion: @escaping (Result<T, Error>) -> ()) {
+        let key = cacheKey(for: target)
+        
+        if let cachedData = try? cache.object(forKey: key) {
+            do {
+                let results = try JSONDecoder().decode(T.self, from: cachedData)
+                print("Returning cached data")
+                completion(.success(results))
+                return
+            } catch let error {
+                completion(.failure(error))
+            }
+        }
+        
+        print("Did not find cached data, requesting data")
+        
         provider.request(target) { result in
             switch result {
             case let .success(response):
@@ -55,6 +83,29 @@ extension CourseService {
             case let .failure(error):
                 completion(.failure(error))
             }
+        }
+    }
+    
+    private func cacheKey(for target: CourseServiceApi) -> CacheKey {
+        var key = "\(target.method.rawValue)-\(target.path)"
+        
+        switch target.task {
+        case .requestParameters(let parameters, _):
+            let sortedParameters = parameters.sorted { $0.key < $1.key }
+            let paramsString = sortedParameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+            key += "?\(paramsString)"
+        default:
+            break
+        }
+        
+        return key
+    }
+    
+    func clearCache() {
+        do {
+            try cache.removeAll()
+        } catch {
+            print("Failed to clear cache: \(error)")
         }
     }
 }

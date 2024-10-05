@@ -80,7 +80,7 @@ extension AuthServiceApi: TargetType {
         switch self {
         case let .login(email, password):
             return .requestParameters(parameters: ["email": email, "password": password], encoding: JSONEncoding.default)
-        case let .fetchDepartments(token):
+        case .fetchDepartments:
             return .requestPlain
         }
     }
