@@ -7,6 +7,11 @@
 
 import Foundation
 
+/// Decodes a jwt token
+///
+/// - Parameter jwtToken: The jwt string to decode
+///
+/// - Returns: The decoded jwt in dictionary form
 func decode(jwtToken jwt: String) throws -> [String: Any] {
 
     enum DecodeErrors: Error {
@@ -36,4 +41,28 @@ func decode(jwtToken jwt: String) throws -> [String: Any] {
 
     let segments = jwt.components(separatedBy: ".")
     return try decodeJWTPart(segments[1])
+}
+
+/// Saves provided object to user defaults
+///
+/// - Parameters:
+///   - value: The object to save
+///   - forKey: The key to save object with
+func saveToUserDefaults<T: Codable>(_ value: T, forKey key: String) {
+    if let encoded = try? JSONEncoder().encode(value) {
+        UserDefaults.standard.set(encoded, forKey: key)
+    }
+}
+
+/// Retrieves provided object to user defaults
+///
+/// - Parameters:
+///   - forKey: The key to retrieve object with
+func retrieveFromUserDefaults<T: Codable>(forKey key: String) -> T? {
+    if let encoded = UserDefaults.standard.data(forKey: key) {
+        if let decoded = try? JSONDecoder().decode(T.self, from: encoded) {
+            return decoded
+        }
+    }
+    return nil
 }

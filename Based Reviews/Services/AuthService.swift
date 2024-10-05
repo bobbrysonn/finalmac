@@ -10,7 +10,6 @@ import Moya
 import SwiftUI
 import Factory
 
-@Observable
 class AuthService {
     private let provider = MoyaProvider<AuthServiceApi>()
     
@@ -28,7 +27,9 @@ class AuthService {
                     if let decodedToken = try? decode(jwtToken: decodedResponse.access) {
                         let user = User(id: decodedToken["user_id"] as! Int, email: decodedToken["email"] as! String, username: decodedToken["username"] as! String, access: decodedResponse.access, refresh: decodedResponse.refresh )
                         
-                        UserDefaults.standard.set(user, forKey: "user")
+                        // Save
+                        saveToUserDefaults(user, forKey: "user")
+                        UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     }
                 } else {
                     if response.statusCode == 401 {

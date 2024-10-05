@@ -7,6 +7,18 @@
 
 import Foundation
 
+/// Describes the shape of the course object
+struct Course: Codable {
+    let id: Int
+    let code: String
+    let distribs: String?
+    let description: String?
+    let title: String?
+    let layup: Double
+    let rating: Double
+    let url: String?
+}
+
 /// Describes the shape of the token received from /auth/jwt/create
 struct JWTToken: Codable {
     let token_type: String
@@ -19,7 +31,7 @@ struct JWTToken: Codable {
 }
 
 /// Describes the shape of the user in the app
-struct User {
+struct User: Codable {
     let id: Int
     let email: String
     let username: String
